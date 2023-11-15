@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="hangman-game.css">
+
+  <title>Hangman Game</title>
+  <script>
+    var word = "hangman"; // Replace with your desired word
+    var guesses = [];
+    var maxGuesses = 6;
+    
+    function guessLetter() {
+      var letter = document.getElementById("letter").value.toLowerCase();
+      if (letter.length !== 1) {
+        alert("Please enter a single letter.");
+        return;
+      }
+      
+      if (guesses.includes(letter)) {
+        alert("You have already guessed that letter.");
+        return;
+      }
+      
+      guesses.push(letter);
+      
+      if (!word.includes(letter)) {
+        maxGuesses--;
+        alert("Incorrect guess! You have " + maxGuesses + " guesses left.");
+      }
+      
+      updateDisplay();
+      
+      if (maxGuesses === 0) {
+        alert("Game over! You ran out of guesses. The word was: " + word);
+        resetGame();
+      } else if (isWordGuessed()) {
+        alert("Congratulations! You guessed the word correctly.");
+        resetGame();
+      }
+    }
+    
+    function updateDisplay() {
+      var display = "";
+      for (var i = 0; i < word.length; i++) {
+        var letter = word[i];
+        if (guesses.includes(letter)) {
+          display += letter + " ";
+        } else {
+          display += "_ ";
+        }
+      }
+      document.getElementById("word-display").textContent = display;
+      document.getElementById("guesses-left").textContent = maxGuesses;
+    }
+    
+    function isWordGuessed() {
+      for (var i = 0; i < word.length; i++) {
+        if (!guesses.includes(word[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
+    function resetGame() {
+      guesses = [];
+      maxGuesses = 6;
+      updateDisplay();
+      document.getElementById("letter").value = "";
+    }
+  </script>
+</head>
+<body>
+  <h1>Hangman Game</h1>
+  
+  <p>Guess the letters to uncover the hidden word.</p>
+  
+  <p>Word: <span id="word-display"></span></p>
+  
+  <p>Guesses left: <span id="guesses-left">6</span></p>
+  
+  <label for="letter">Enter a letter: </label>
+  <input type="text" id="letter" maxlength="1">
+  <button onclick="guessLetter()">Guess</button>
+</body>
+</html>

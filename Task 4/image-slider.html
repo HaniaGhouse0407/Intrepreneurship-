@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="image-slider.css">
+
+  <title>Image Slider</title>
+  <style>
+    .slider {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .slider img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+  <script>
+    var images = ["images1.jpg", "image2.jpg", "image3.jpg"]; // Replace with your image URLs or paths
+    var currentImageIndex = 0;
+    
+    function showNextImage() {
+      var slider = document.getElementById("slider");
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      slider.src = images[currentImageIndex];
+    }
+    
+    function showPreviousImage() {
+      var slider = document.getElementById("slider");
+      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+      slider.src = images[currentImageIndex];
+    }
+  </script>
+</head>
+<body>
+  <h1>Image Slider</h1>
+  
+  <div class="slider">
+    <img id="slider" src="image1.jpg" alt="Image">
+  </div>
+  
+  <button onclick="showPreviousImage()">Previous</button>
+  <button onclick="showNextImage()">Next</button>
+</body>
+</html>
